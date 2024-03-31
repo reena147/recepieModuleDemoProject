@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dictionary"
+        android:title="Dictionary"
+        android:icon="@drawable/dictionary_icon"/>
+    <item
+        android:id="@+id/song"
+        android:title="Song"
+        android:icon="@drawable/music_24"/>
+    <item
+        android:id="@+id/sunset"
+        android:title="Sunset"
+        android:icon="@drawable/baseline_wb_sunny_24"/>
+
+    <item
+        android:id="@+id/recepie"
+        android:title="Recepie"
+        android:icon="@drawable/baseline_food_bank_24"/>
+</menu>

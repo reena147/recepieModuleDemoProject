@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp"
+    android:id="@+id/addactivityfrag"
+    android:layout_marginTop="50dp"
+    android:gravity="center_horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="click on image to add recepie image"
+        android:textSize="16dp"
+        android:textColor="#123456"
+        android:textStyle="bold"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="30dp"
+        android:id="@+id/imageView"
+       />
+    <EditText
+        android:id="@+id/et_itemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Recepie name"/>
+
+    <EditText
+        android:id="@+id/et_itemIngredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:hint="Enter recepie Ingredients"/>
+
+    <EditText
+        android:id="@+id/et_itemDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:maxLines="20"
+        android:inputType="textMultiLine"
+        android:hint="Enter recepie description"/>
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btn_popup_add"
+            android:textColor="#ffffff"
+            android:background="#1234aa"
+            android:padding="10dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD Recepie"/>
+
+        <Button
+            android:layout_marginLeft="10dp"
+            android:id="@+id/btn_popup_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:background="#1234aa"
+
+            android:text="cancel"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
