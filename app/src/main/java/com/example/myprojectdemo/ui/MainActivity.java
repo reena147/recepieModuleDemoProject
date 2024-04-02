@@ -1,35 +1,25 @@
 package com.example.myprojectdemo.ui;
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 
 import com.example.myprojectdemo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.Manifest.permission_group.CAMERA;
 
 public  class MainActivity extends AppCompatActivity  implements BottomNavigationView
         .OnNavigationItemSelectedListener{
     BottomNavigationView bottomNavigationView;
     private static final int PERMISSION_REQUEST_CODE = 200;
     DictionaryFragment dictionaryFragment = new DictionaryFragment();
-    SongFragment songFragment = new SongFragment();
+    RecipeFragment recipeFragment = new RecipeFragment();
    SunsetFragment sunsetFragment = new SunsetFragment();
-   RecepieFragment recepieFragment=new RecepieFragment();
+   SongFragment songFragment=new SongFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +72,7 @@ public  class MainActivity extends AppCompatActivity  implements BottomNavigatio
         {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, recepieFragment)
+                    .replace(R.id.flFragment, recipeFragment)
                     .commit();
             return  true;
         }

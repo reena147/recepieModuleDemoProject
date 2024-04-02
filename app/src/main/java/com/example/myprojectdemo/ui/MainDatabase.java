@@ -12,14 +12,15 @@ import java.util.ArrayList;
 
 public class MainDatabase extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "main_db";
-    private static final String TABLE_NAME = "recepie_table";
+    private static final String DB_NAME = "main_db1";
+    private static final String TABLE_NAME = "song_table";
 
-    private static final String R_ID = "r_id";
-    private static final String R_NAME = "r_name";
-    private static final String R_Desc = "r_desc";
-    private static final String R_IMG="r_img";
-    private static final String R_INGREDIENTS="r_ingredients";
+    private static final String A_IDS = "a_ids";
+    private static final String A_TITLE = "a_TITLE";
+    private static final String A_DURATION = "a_duration";
+    private static final String A_ALBUM_COVER="a_album_cover";
+    private static final String A_ALBUM_NAME="a_album_name";
+    private static final String A_ID="a_id";
 
     public MainDatabase(Context context) {
         super(context, DB_NAME, null, 1);
@@ -29,8 +30,8 @@ public class MainDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String create_table = "CREATE TABLE "  + TABLE_NAME + "("
-                + R_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + R_NAME
-                + " TEXT," + R_Desc + " TEXT,r_img  TEXT,r_ingredients TEXT)";
+                + A_IDS + " INTEGER PRIMARY KEY AUTOINCREMENT," + A_TITLE
+                + " TEXT,a_album_cover  TEXT," + A_DURATION + " TEXT,a_album_name TEXT,a_id INTEGER)";
         db.execSQL(create_table);
     }
 
@@ -42,16 +43,17 @@ public class MainDatabase extends SQLiteOpenHelper {
 
     }
 
-    boolean insertData (String name, String desc,String img,String ingredients){
+    boolean insertData (String name, String desc,String img,String ingredients,int id){
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(R_NAME,name);
-        contentValues.put(R_Desc,desc);
-        contentValues.put(R_IMG,img);
-        contentValues.put(R_INGREDIENTS,ingredients);
+        contentValues.put(A_TITLE,name);
+        contentValues.put(A_ALBUM_COVER,img);
+        contentValues.put(A_ALBUM_NAME,desc);
+        contentValues.put(A_DURATION,ingredients);
+        contentValues.put(A_ID,id);
         long result = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
 
         if (result == -1){
@@ -66,7 +68,7 @@ public class MainDatabase extends SQLiteOpenHelper {
     int delete(String sid){
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        int query = sqLiteDatabase.delete(TABLE_NAME,"r_id = ?",new String[]{sid});
+        int query = sqLiteDatabase.delete(TABLE_NAME,"a_id = ?",new String[]{sid});
         return query;
 
     }
@@ -76,24 +78,25 @@ public class MainDatabase extends SQLiteOpenHelper {
 
 
 
-    public ArrayList<RecipeModel> readCourses()
+    public ArrayList<ArtistModel> readCourses()
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor
                 = db.rawQuery("SELECT distinct * FROM " + TABLE_NAME, null);
 
         // on below line we are creating a new array list.
-        ArrayList<RecipeModel> courseModalArrayList
+        ArrayList<ArtistModel> courseModalArrayList
                 = new ArrayList<>();
 
 
             while (cursor.moveToNext()) {
-                int id = Integer.parseInt(cursor.getString(0));
+
                 String name = cursor.getString(1);
-                String desc = cursor.getString(2);
-                String image=cursor.getString(3);
-                String ingredients=cursor.getString(4);
-                courseModalArrayList.add(new RecipeModel(id, name, desc,image,ingredients));
+                String desc = cursor.getString(4);
+                String ingredients=cursor.getString(3);
+                String image=cursor.getString(2);
+                int id = Integer.parseInt(cursor.getString(5));
+                courseModalArrayList.add(new ArtistModel( name, desc,ingredients,image,id));
             }
 
 

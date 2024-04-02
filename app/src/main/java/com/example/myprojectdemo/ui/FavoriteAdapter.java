@@ -6,47 +6,36 @@ import com.squareup.picasso.Picasso;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.myclass> implements Filterable {
 
     Context context;
     String fname;
-    ArrayList<RecipeModel> recepieModels;
-    ArrayList<RecipeModel> recepieModelfull;
+    ArrayList<ArtistModel> recepieModels;
+    ArrayList<ArtistModel> recepieModelfull;
+    MainDatabase db;
 
-
-    public RecipeAdapter(Context context, ArrayList recepieModels) {
+    public FavoriteAdapter(Context context, ArrayList recepieModels) {
         this.context = context;
         this.recepieModels = recepieModels;
         recepieModelfull = new ArrayList<>(recepieModels);
@@ -55,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
 
     @Override
     public myclass onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.member_row,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fav_member_row,parent,false);
         return new myclass(view);
 
 
@@ -64,20 +53,38 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull myclass holder, int position) {
-          RecipeModel model=recepieModels.get(position);
+        ArtistModel model=recepieModels.get(position);
 
-        holder.textViewname.setText(model.getName());
-        Picasso.get().load(recepieModels.get(position).getImage()).into(holder.imageView);
+        holder.textViewname.setText(model.getTitle());
+        // holder.textViewname1.setText(model.getIngredint());
+       //  holder.textViewname2.setText(model.getDescription());
+            try{
 
+                Picasso.get().load(recepieModels.get(position).getAlbumCover()).into(holder.imageView);
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db=new MainDatabase(context);
+                db.delete(String.valueOf(model.getId()));
+                Intent i=new Intent(context, ViewFavouriteActivity.class);
+                context.startActivity(i);
+            }
+        });
 
         holder.cd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               Intent intent = new Intent(context, RecipePage.class);
+                Intent intent = new Intent(context, FavoriteDetailPage.class);
                 intent.putExtra("id",model.getId());
-               intent.putExtra("title",model.getName());
-                intent.putExtra("imageUrl",model.getImage());
+                intent.putExtra("title",model.getTitle());
+                intent.putExtra("imageUrl",model.getAlbumCover());
+                intent.putExtra("albumname",model.getAlbumName());
+                intent.putExtra("duration",model.getDuration());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -97,10 +104,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
         TextView textViewname1;
         TextView textViewname2;
         CardView cd;
-
+        ImageButton deleteBtn;
         public myclass( View itemView) {
             super(itemView);
-
+            deleteBtn=itemView.findViewById(R.id.deleteBtn);
             textViewname = itemView.findViewById(R.id.title);
             textViewname1 = itemView.findViewById(R.id.subtitle);
             textViewname2 = itemView.findViewById(R.id.desc);
@@ -111,10 +118,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
 
 
     }
-/*
-    private void saveImageToExternalStorage(Bitmap finalBitmap)
-    {
 
+    private void saveImageToExternalStorage(Bitmap finalBitmap) {
         String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         File myDir = new File(root + "/saved_images");
         myDir.mkdirs();
@@ -146,23 +151,23 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
                         Log.i("ExternalStorage", "-> uri=" + uri);
                     }
                 });
-
-    }
 */
-    /*
+    }
+
+    @Override
     public Filter getFilter() {
         return exampleFilter;
     }
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<RecipeModel> filteredList = new ArrayList<>();
+            List<ArtistModel> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(recepieModelfull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (RecipeModel item : recepieModelfull) {
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                for (ArtistModel item : recepieModelfull) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -178,6 +183,4 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
             notifyDataSetChanged();
         }
     };
-
-     */
 }

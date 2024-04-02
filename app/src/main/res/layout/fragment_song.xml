@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/recepiefrag"
+   android:gravity="center"
+    android:layout_marginHorizontal="20dp"
     tools:context=".ui.SongFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="songfragment" />
+     <Button
+         android:id="@+id/show_fav"
+         android:text="show Favorite"
+         android:textColor="#ffffff"
+         android:background="#1234aa"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
 
-</FrameLayout>
+     </Button>
+
+    <Button
+        android:id="@+id/show_artist"
+        android:layout_marginTop="20dp"
+        android:text="Search artist from server"
+        android:textColor="#ffffff"
+        android:background="#1234aa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </Button>
+
+
+</LinearLayout>

@@ -13,17 +13,22 @@
         android:theme="@style/Theme.MyProjectDemo"
         tools:targetApi="31">
         <activity
-            android:name=".ui.RecipePage"
+            android:name=".ui.ArtistDetailPage"
             android:exported="false" />
         <activity
-            android:name=".ui.ViewRecepieActivity"
+            android:name=".ui.ViewArtistActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ViewSavedRecepieActivity"
+            android:name=".ui.ViewFavouriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SavedRecipePage"
+            android:name=".ui.FavoriteDetailPage"
             android:exported="false" />
+        <activity android:name=".ui.ViewTrackListActivity"
+            android:exported="false"
+            >
+
+        </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"

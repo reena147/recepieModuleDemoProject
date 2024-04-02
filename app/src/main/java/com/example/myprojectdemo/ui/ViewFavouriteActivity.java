@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,19 +21,19 @@ import com.example.myprojectdemo.R;
 
 import java.util.ArrayList;
 
-public class ViewSavedRecepieActivity extends AppCompatActivity {
+public class ViewFavouriteActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    SavedRecipeAdapter adapter;
+    FavoriteAdapter adapter;
 
-    private ArrayList<RecipeModel> recipes;
+    private ArrayList<ArtistModel> recipes;
     MainDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_saved_recepie);
+        setContentView(R.layout.activity_view_saved_favorite);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         recyclerView=findViewById(R.id.recyclerview);
-        db=new MainDatabase(ViewSavedRecepieActivity.this);
+        db=new MainDatabase(ViewFavouriteActivity.this);
         recipes=new ArrayList<>();
 
         recipes = db.readCourses();
@@ -42,7 +41,7 @@ public class ViewSavedRecepieActivity extends AppCompatActivity {
             Toast.makeText(this, "No Data Available....", Toast.LENGTH_SHORT).show();
         }
         else {
-            adapter = new SavedRecipeAdapter( this, recipes);
+            adapter = new FavoriteAdapter( this, recipes);
 
             recyclerView.setAdapter(adapter);
 
@@ -57,12 +56,12 @@ public class ViewSavedRecepieActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.actionHelp) {
-            new AlertDialog.Builder(ViewSavedRecepieActivity.this)
+            new AlertDialog.Builder(ViewFavouriteActivity.this)
                     .setTitle("How to use applicaion?")
                     .setMessage("When we open application \n in bottom 4 option available"+
-                           " \n for navigation.last option is recipe option click on that menu application navigate to recipe fragment.\n" +
-                            "  \"There is two button one for show saved recipe and other for recipe from server.On button click recyclerview is display and then\n" +
-                            "click recycleview whole detail of reipe is open.")
+                           " \n for navigation.second option is song option click on that menu application navigate to song fragment.\n" +
+                            "  \"There is two button one for show saved favorite and other for artist list from server.On button click recyclerview is display and then\n" +
+                            "click recycleview whole detail of artist is open.")
 
                     // Specifying a listener allows you to take an action before dismissing the dialog.
                     // The dialog is automatically dismissed when a dialog button is clicked.

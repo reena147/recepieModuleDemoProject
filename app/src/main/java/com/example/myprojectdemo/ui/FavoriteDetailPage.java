@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SavedRecipePage extends AppCompatActivity {
+public class FavoriteDetailPage extends AppCompatActivity {
     public int position;
     public TextView title;
     public ImageView imgageView;
@@ -40,7 +39,7 @@ public class SavedRecipePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_recipe_page);
+        setContentView(R.layout.activity_favorite_detail_page);
 
         imgageView = findViewById(R.id.img1);
 
@@ -55,13 +54,16 @@ public class SavedRecipePage extends AppCompatActivity {
         String imgUrl=i.getStringExtra("imageUrl");
 
         Picasso.get().load(imgUrl).into(imgageView);
-        searchRecepiebyId(JSON_URL,position);
-        //Get the data from the intent
+        //searchRecepiebyId(JSON_URL,position);
 
-
+        stringredients=i.getStringExtra("albumname");
+        surl=i.getStringExtra("albumname");
+        ingrdient.setText(stringredients);
+        desc.setText(surl);
 
         title.setText(titles);
-        db=new MainDatabase(SavedRecipePage.this);
+
+        db=new MainDatabase(FavoriteDetailPage.this);
 
 
     }
