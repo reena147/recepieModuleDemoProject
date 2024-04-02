@@ -11,7 +11,7 @@
 
      <Button
          android:id="@+id/addRecepie"
-         android:text="Add Recepie"
+         android:text="show saved Recepie"
          android:textColor="#ffffff"
          android:background="#1234aa"
          android:layout_width="match_parent"
@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/showRecepie"
         android:layout_marginTop="20dp"
-        android:text="View Recepie"
+        android:text="View Recepie from server"
         android:textColor="#ffffff"
         android:background="#1234aa"
         android:layout_width="match_parent"

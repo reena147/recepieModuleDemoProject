@@ -35,13 +35,7 @@ public  class MainActivity extends AppCompatActivity  implements BottomNavigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-           boolean res= checkPermission();
-           if(res==false)
-           {
-               requestPermission();
-           }
-        }
+
         bottomNavigationView
                 = findViewById(R.id.bottomNavigationView);
         bottomNavigationView
@@ -50,39 +44,7 @@ public  class MainActivity extends AppCompatActivity  implements BottomNavigatio
 
     }
 
-    private boolean checkPermission() {
 
-        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
-        int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
-        int result3 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
-        return  result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED && result3 == PackageManager.PERMISSION_GRANTED;
-    }
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission. WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0) {
-
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean storage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    boolean write = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-
-                    if (cameraAccepted && storage) {
-                        Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Permission not granted", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
-        }
-    }
 
 
     @SuppressLint("NonConstantResourceId")
