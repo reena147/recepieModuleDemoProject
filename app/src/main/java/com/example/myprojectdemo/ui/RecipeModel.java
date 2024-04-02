@@ -5,7 +5,7 @@ public class RecipeModel {
     public String description;
     public String ingredint;
      public int id;
-     public byte[] image;
+     public String image;
 
     public String getIngredint() {
         return ingredint;
@@ -20,11 +20,11 @@ public class RecipeModel {
         return id;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -33,7 +33,7 @@ public class RecipeModel {
     }
     public RecipeModel(){}
 
-    public RecipeModel(int id,String name, String description,byte[] image,String ingredint) {
+    public RecipeModel(int id,String name, String description,String image,String ingredint) {
         this.id=id;
         this.name = name;
         this.description = description;

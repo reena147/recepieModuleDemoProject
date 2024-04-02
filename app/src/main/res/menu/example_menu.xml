@@ -5,9 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <item
+        android:id="@+id/actionHelp"
+        android:title="Help"
+        android:icon="@drawable/baseline_help_24"
+
+        app:showAsAction="collapseActionView" />
+
+    <item
         android:id="@+id/actionSearch"
-        android:title="Search"
         android:icon="@drawable/baseline_search_24"
+        android:title=""
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 </menu>

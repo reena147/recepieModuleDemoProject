@@ -63,23 +63,9 @@
 
             </TextView>
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/tvdesc"
-                android:layout_width="wrap_content"
-                android:textColor="#ffffff"
-                android:layout_centerHorizontal="true"
-                android:background="#1234aa"
-                android:padding="10dp"
-                android:text="Save to database"
-                android:layout_height="wrap_content">
-
-            </Button>
-
-            <ProgressBar
+                      <ProgressBar
                 android:id="@+id/progressBar1"
-                android:layout_below="@+id/btnSave"
+                android:layout_below="@+id/tvdesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

@@ -1,20 +1,14 @@
 package com.example.myprojectdemo.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,13 +19,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.myprojectdemo.R;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-
-public class RecipePage extends AppCompatActivity {
+public class SavedRecipePage extends AppCompatActivity {
     public int position;
     public TextView title;
     public ImageView imgageView;
@@ -49,7 +40,7 @@ public class RecipePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_page);
+        setContentView(R.layout.activity_saved_recipe_page);
 
         imgageView = findViewById(R.id.img1);
 
@@ -70,22 +61,7 @@ public class RecipePage extends AppCompatActivity {
 
 
         title.setText(titles);
-        db=new MainDatabase(RecipePage.this);
-        findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean res=db.insertData(titles,stringredients,imgUrl,surl);
-                if(res==true)
-                {
-                    Toast.makeText(RecipePage.this, "Recepie added successfully...", Toast.LENGTH_SHORT).show();
-                    Intent i =new Intent(RecipePage.this,ViewSavedRecepieActivity.class);
-                    startActivity(i);
-                }
-                else{
-                    Toast.makeText(RecipePage.this, "not added...", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        db=new MainDatabase(SavedRecipePage.this);
 
 
     }
@@ -110,7 +86,6 @@ public class RecipePage extends AppCompatActivity {
                     stringredients=obj.getString("summary");
                     surl=obj.getString("sourceUrl");
                     desc.setText("Spoonacular Source Url:\n"+surl);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);
