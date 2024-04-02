@@ -31,7 +31,7 @@ Button btnAddRecepie,btnViewRecepie;
         btnAddRecepie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getActivity().getApplicationContext(),AddRecepieActivity.class);
+                Intent i=new Intent(getActivity().getApplicationContext(),ViewSavedRecepieActivity.class);
                 startActivity(i);
 
             }
@@ -42,7 +42,7 @@ Button btnAddRecepie,btnViewRecepie;
             public void onClick(View view) {
                 Intent i=new Intent(getActivity().getApplicationContext(),ViewRecepieActivity.class);
                 startActivity(i);
-               // Toast.makeText(getContext(), "show", Toast.LENGTH_SHORT).show();
+
             }
         });
        return  v;

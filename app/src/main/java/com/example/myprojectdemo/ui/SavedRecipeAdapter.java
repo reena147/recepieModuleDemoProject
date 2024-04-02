@@ -21,9 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -38,15 +38,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  {
+public class SavedRecipeAdapter extends RecyclerView.Adapter<SavedRecipeAdapter.myclass> implements Filterable {
 
     Context context;
     String fname;
     ArrayList<RecipeModel> recepieModels;
     ArrayList<RecipeModel> recepieModelfull;
+    MainDatabase db;
 
-
-    public RecipeAdapter(Context context, ArrayList recepieModels) {
+    public SavedRecipeAdapter(Context context, ArrayList recepieModels) {
         this.context = context;
         this.recepieModels = recepieModels;
         recepieModelfull = new ArrayList<>(recepieModels);
@@ -55,7 +55,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
 
     @Override
     public myclass onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.member_row,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.save_member_row,parent,false);
         return new myclass(view);
 
 
@@ -67,16 +67,32 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
           RecipeModel model=recepieModels.get(position);
 
         holder.textViewname.setText(model.getName());
-        Picasso.get().load(recepieModels.get(position).getImage()).into(holder.imageView);
+        // holder.textViewname1.setText(model.getIngredint());
+       //  holder.textViewname2.setText(model.getDescription());
+            try{
+             String image= model.getImage();
+                Picasso.get().load(recepieModels.get(position).getImage()).into(holder.imageView);
 
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db=new MainDatabase(context);
+                db.delete(String.valueOf(model.getId()));
+                Intent i=new Intent(context,ViewSavedRecepieActivity.class);
+                context.startActivity(i);
+            }
+        });
 
         holder.cd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               Intent intent = new Intent(context, RecipePage.class);
+                Intent intent = new Intent(context, SavedRecipePage.class);
                 intent.putExtra("id",model.getId());
-               intent.putExtra("title",model.getName());
+                intent.putExtra("title",model.getName());
                 intent.putExtra("imageUrl",model.getImage());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -97,10 +113,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
         TextView textViewname1;
         TextView textViewname2;
         CardView cd;
-
+        ImageButton deleteBtn;
         public myclass( View itemView) {
             super(itemView);
-
+            deleteBtn=itemView.findViewById(R.id.deleteBtn);
             textViewname = itemView.findViewById(R.id.title);
             textViewname1 = itemView.findViewById(R.id.subtitle);
             textViewname2 = itemView.findViewById(R.id.desc);
@@ -111,10 +127,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
 
 
     }
-/*
-    private void saveImageToExternalStorage(Bitmap finalBitmap)
-    {
 
+    private void saveImageToExternalStorage(Bitmap finalBitmap) {
         String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         File myDir = new File(root + "/saved_images");
         myDir.mkdirs();
@@ -146,10 +160,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
                         Log.i("ExternalStorage", "-> uri=" + uri);
                     }
                 });
-
-    }
 */
-    /*
+    }
+
+    @Override
     public Filter getFilter() {
         return exampleFilter;
     }
@@ -178,6 +192,4 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.myclass>  
             notifyDataSetChanged();
         }
     };
-
-     */
 }

@@ -30,7 +30,7 @@ public class MainDatabase extends SQLiteOpenHelper {
 
         String create_table = "CREATE TABLE "  + TABLE_NAME + "("
                 + R_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + R_NAME
-                + " TEXT," + R_Desc + " TEXT,r_img  Blob,r_ingredients TEXT)";
+                + " TEXT," + R_Desc + " TEXT,r_img  TEXT,r_ingredients TEXT)";
         db.execSQL(create_table);
     }
 
@@ -42,7 +42,7 @@ public class MainDatabase extends SQLiteOpenHelper {
 
     }
 
-    boolean insertData (String name, String desc,byte [] img,String ingredients){
+    boolean insertData (String name, String desc,String img,String ingredients){
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
@@ -71,47 +71,16 @@ public class MainDatabase extends SQLiteOpenHelper {
 
     }
 
-    void update(String id, String name, String desc){
-
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(R_ID, id);
-        contentValues.put(R_NAME,name);
-        contentValues.put(R_Desc,desc);
 
 
 
-        sqLiteDatabase.update(TABLE_NAME,contentValues,"r_id = ?",new String[]{ id });
 
-    }
-
-    Cursor showData(){
-
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        Cursor res = sqLiteDatabase.rawQuery("select * from recepie_table ",null);
-
-        return res;
-
-    }
-
-
-    byte[] showselectedData(String id){
-
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor res = sqLiteDatabase.rawQuery("SELECT r_img FROM recepie_table WHERE r_id = ?", new String[]{id}, null);
-        @SuppressLint("Range") byte []image=res.getBlob(res.getColumnIndex("r_img"));
-        return image;
-
-    }
 
     public ArrayList<RecipeModel> readCourses()
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor
-                = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+                = db.rawQuery("SELECT distinct * FROM " + TABLE_NAME, null);
 
         // on below line we are creating a new array list.
         ArrayList<RecipeModel> courseModalArrayList
@@ -122,7 +91,7 @@ public class MainDatabase extends SQLiteOpenHelper {
                 int id = Integer.parseInt(cursor.getString(0));
                 String name = cursor.getString(1);
                 String desc = cursor.getString(2);
-                byte []image=cursor.getBlob(3);
+                String image=cursor.getString(3);
                 String ingredients=cursor.getString(4);
                 courseModalArrayList.add(new RecipeModel(id, name, desc,image,ingredients));
             }
@@ -134,30 +103,5 @@ public class MainDatabase extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<RecipeModel> readCourse()
-    {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor
-                = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-
-        // on below line we are creating a new array list.
-        ArrayList<RecipeModel> courseModalArrayList
-                = new ArrayList<>();
-
-
-        while (cursor.moveToNext()) {
-            int id = Integer.parseInt(cursor.getString(0));
-            String name = cursor.getString(1);
-            String desc = cursor.getString(2);
-            byte []image=cursor.getBlob(3);
-            String ingredients=cursor.getString(4);
-            courseModalArrayList.add(new RecipeModel(id, name, desc,image,ingredients));
-        }
-
-
-
-        cursor.close();
-        return courseModalArrayList;
-    }
 
 }
